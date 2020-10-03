@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class ObjectMover : MonoBehaviour
 {
@@ -7,9 +8,14 @@ public class ObjectMover : MonoBehaviour
 
     private Vector2 m_Move;
 
+    public static event Action<string> OnMoveAction;
+
     public void OnMove(InputAction.CallbackContext context)
     {
         m_Move = context.ReadValue<Vector2>();
+        Debug.Log("Time to fire OnMove event");
+
+        OnMoveAction("This string will be received by listener as arg");
     }
 
     public void Update()
