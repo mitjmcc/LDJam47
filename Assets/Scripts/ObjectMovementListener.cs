@@ -1,34 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ObjectMovementListener : MonoBehaviour
 {
-    public float moveSpeed = 15.0f;
+    public int id;
+    public static event Action<ObjectMovementListener> OnPassedByAction;
 
-    private Vector2 m_Move;
-
-    void Awake()
+    public void FixedUpdate()
     {
-        ObjectMovementEvents.OnMoveAction += Listener_OnMove;
+        CheckPassedBy();
     }
 
-    void Listener_OnMove (Vector2 direction)
+    private void CheckPassedBy()
     {
-        m_Move = direction;
-    }
-
-    public void Update()
-    {
-        Move(m_Move);
-    }
-
-    private void Move(Vector2 direction)
-    {
-        if (direction.sqrMagnitude < 0.01)
-            return;
-        var move = new Vector3(direction.x, 0, direction.y);
-        var scaledMoveSpeed = moveSpeed * Time.deltaTime;
-        transform.position += move * scaledMoveSpeed;
+        if (transform.position.z < -10)
+        {
+            OnPassedByAction(this);
+        }
     }
 }
