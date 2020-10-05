@@ -48,10 +48,10 @@ public class RoadSpawner : MonoBehaviour
 
             position.x -= direction.x * laneChangeSpeed;
 
-            if (position.x > 4.0f) {
-                position.x = 4.0f;
-            } else if (position.x < -6.0f) {
-                position.x = -6.0f;
+            if (position.x > 2.0f) {
+                position.x = 2.0f;
+            } else if (position.x < -2.0f) {
+                position.x = -2.0f;
             }
 
             roadList[i].position = position;
