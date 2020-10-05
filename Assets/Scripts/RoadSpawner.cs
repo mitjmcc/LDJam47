@@ -17,6 +17,8 @@ public class RoadSpawner : MonoBehaviour
     private float roadSize = 10f;
     private float laneChangeSpeed = 0.25f;
 
+    private static float roadOffset;
+
     void Awake()
     {
         ObjectMovementEvents.OnMoveAction += RoadSpawner_OnMove;
@@ -31,6 +33,7 @@ public class RoadSpawner : MonoBehaviour
     {
         // if (direction.sqrMagnitude < 0.01)
         //     return;
+
         var position = Vector3.zero;
         for(int i = 0; i < roadList.Count; i++)
         {
@@ -52,23 +55,17 @@ public class RoadSpawner : MonoBehaviour
             }
 
             roadList[i].position = position;
-
-            position.x += 8.42f;
-            roadOffRampList[i].position = position;
         }
-
-        position = roadList[0].position;
-        position.z = 0f;
-        position.x += 62.1f;
-        roadCurve.position = position;
-
-        var rotation = roadCurve.eulerAngles;
-        rotation.y -= 1f;
-        roadCurve.eulerAngles = rotation;
+        roadOffset = roadList[0].position.x;
     }
 
     void RoadSpawner_OnMove (Vector2 direction)
     {
         m_Move = direction;
+    }
+
+    public static float GetRoadOffset()
+    {
+        return roadOffset;
     }
 }

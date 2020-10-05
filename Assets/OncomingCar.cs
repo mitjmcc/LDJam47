@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class OncomingCar : MonoBehaviour
 {
-    private Vector2 m_Move;
-
-    void Awake()
-    {
-        ObjectMovementEvents.OnMoveAction += OncomingCar_OnMove;
-    }
+    [SerializeField]
+    private float carSpeed;
+    [SerializeField]
+    private float carOffset;
 
     void FixedUpdate()
     {
-        var postition = transform.position;
-        postition.z -= 25f * Time.fixedDeltaTime;
-        transform.position = postition;
-    }
-
-    void OncomingCar_OnMove (Vector2 direction)
-    {
-        m_Move = direction;
+        var position = transform.position;
+        position.z -= carSpeed * Time.fixedDeltaTime;
+        position.x = RoadSpawner.GetRoadOffset() - carOffset;
+        if (position.z < -20)
+        {
+            position.z += 64;
+        }
+        transform.position = position;
     }
 }
